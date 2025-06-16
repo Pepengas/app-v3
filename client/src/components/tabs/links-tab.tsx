@@ -3,11 +3,15 @@ import { useLanguage } from "@/hooks/use-language";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ExternalLink, GraduationCap, BookOpen, Mail, Calendar, Library, Link } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ExternalLink, GraduationCap, BookOpen, Mail, Calendar, Library, Link, X, RefreshCw } from "lucide-react";
+import { useState } from "react";
 import type { QuickLink } from "@shared/schema";
 
 export function LinksTab() {
   const { t } = useLanguage();
+  const [selectedLink, setSelectedLink] = useState<QuickLink | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const { data: links, isLoading } = useQuery<QuickLink[]>({
     queryKey: ["/api/links"],
@@ -30,12 +34,9 @@ export function LinksTab() {
     }
   };
 
-  const handleLinkClick = (url: string, isExternal: boolean) => {
-    if (isExternal) {
-      window.open(url, "_blank", "noopener,noreferrer");
-    } else {
-      window.location.href = url;
-    }
+  const handleLinkClick = (link: QuickLink) => {
+    setSelectedLink(link);
+    setIsDialogOpen(true);
   };
 
   if (isLoading) {
@@ -96,7 +97,7 @@ export function LinksTab() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleLinkClick(link.url, Boolean(link.isExternal))}
+                    onClick={() => handleLinkClick(link)}
                     className="p-2 text-primary hover:bg-surface-variant smooth-transition hover:scale-110"
                   >
                     <ExternalLink className="h-4 w-4" />
@@ -107,6 +108,58 @@ export function LinksTab() {
           ))}
         </div>
       )}
+
+      {/* Embedded Web View Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-6xl h-[80vh] p-0 bg-background border border-outline-variant">
+          <DialogHeader className="p-4 border-b border-outline-variant">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className={`w-8 h-8 rounded-lg ${selectedLink?.color || 'bg-primary'} flex items-center justify-center`}>
+                  {selectedLink && getIconByName(selectedLink.icon)}
+                </div>
+                <div>
+                  <DialogTitle className="text-on-surface">{selectedLink?.title}</DialogTitle>
+                  <p className="text-sm text-on-surface-variant">{selectedLink?.description}</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    if (selectedLink) {
+                      window.open(selectedLink.url, "_blank", "noopener,noreferrer");
+                    }
+                  }}
+                  className="text-on-surface-variant hover:bg-surface-variant"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setIsDialogOpen(false)}
+                  className="text-on-surface-variant hover:bg-surface-variant"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </DialogHeader>
+          <div className="flex-1 relative bg-surface">
+            {selectedLink && (
+              <iframe
+                src={selectedLink.url}
+                className="w-full h-full border-0"
+                title={selectedLink.title}
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                loading="lazy"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
