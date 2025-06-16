@@ -65,14 +65,14 @@ export function NewsTab() {
           <Card key={i} className="material-shadow">
             <CardContent className="p-4">
               <div className="flex items-start space-x-3">
-                <Skeleton className="w-10 h-10 rounded-full" />
+                <Skeleton className="w-10 h-10 rounded-full loading-skeleton" />
                 <div className="flex-1 space-y-2">
-                  <Skeleton className="h-5 w-3/4" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-5 w-3/4 loading-skeleton" />
+                  <Skeleton className="h-4 w-full loading-skeleton" />
+                  <Skeleton className="h-4 w-2/3 loading-skeleton" />
                   <div className="flex items-center justify-between">
-                    <Skeleton className="h-3 w-20" />
-                    <Skeleton className="h-5 w-16 rounded-full" />
+                    <Skeleton className="h-3 w-20 loading-skeleton" />
+                    <Skeleton className="h-5 w-16 rounded-full loading-skeleton" />
                   </div>
                 </div>
               </div>

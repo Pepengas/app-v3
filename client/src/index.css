@@ -76,6 +76,13 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }
 
