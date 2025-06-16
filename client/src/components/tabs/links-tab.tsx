@@ -96,7 +96,7 @@ export function LinksTab() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleLinkClick(link.url, link.isExternal)}
+                    onClick={() => handleLinkClick(link.url, Boolean(link.isExternal))}
                     className="p-2 text-primary hover:bg-surface-variant smooth-transition hover:scale-110"
                   >
                     <ExternalLink className="h-4 w-4" />

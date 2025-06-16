@@ -25,7 +25,8 @@ The application follows a modern full-stack architecture with clear separation b
 ### Backend Architecture
 - **Server**: Express.js with TypeScript (`server/index.ts`)
 - **Routes**: RESTful API endpoints in `server/routes.ts`
-- **Storage**: Abstracted storage interface in `server/storage.ts` (currently implementing MemStorage for development)
+- **Storage**: Abstracted storage interface in `server/storage.ts` (implementing DatabaseStorage with PostgreSQL)
+- **Database**: PostgreSQL with Drizzle ORM for persistent data storage
 - **Development**: Hot module replacement with Vite integration
 
 ### Frontend Architecture
