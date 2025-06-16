@@ -37,7 +37,12 @@ export default function Home() {
     enabled: false,
   });
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const handleSyncData = async () => {
+    if (isRefreshing) return;
+    
+    setIsRefreshing(true);
     try {
       await Promise.all([
         refetchNews(),
@@ -55,24 +60,34 @@ export default function Home() {
         description: t("sync.errorDescription"),
         variant: "destructive",
       });
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 500);
     }
   };
 
   const renderTabContent = () => {
-    switch (activeTab) {
-      case "news":
-        return <NewsTab />;
-      case "teachers":
-        return <TeachersTab />;
-      case "links":
-        return <LinksTab />;
-      case "map":
-        return <MapTab />;
-      case "settings":
-        return <SettingsTab />;
-      default:
-        return <NewsTab />;
-    }
+    const content = (() => {
+      switch (activeTab) {
+        case "news":
+          return <NewsTab />;
+        case "teachers":
+          return <TeachersTab />;
+        case "links":
+          return <LinksTab />;
+        case "map":
+          return <MapTab />;
+        case "settings":
+          return <SettingsTab />;
+        default:
+          return <NewsTab />;
+      }
+    })();
+
+    return (
+      <div key={activeTab} className="tab-content">
+        {content}
+      </div>
+    );
   };
 
   return (
@@ -108,10 +123,11 @@ export default function Home() {
       {/* Floating Action Button */}
       <Button
         onClick={handleSyncData}
+        disabled={isRefreshing}
         className="floating-action fixed bottom-24 right-6 w-14 h-14 bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-full material-shadow-lg"
         size="icon"
       >
-        <RefreshCw className="h-5 w-5" />
+        <RefreshCw className={`h-5 w-5 smooth-transition ${isRefreshing ? 'animate-spin' : ''}`} />
       </Button>
     </div>
   );

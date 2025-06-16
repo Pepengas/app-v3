@@ -110,15 +110,19 @@ export function NewsTab() {
         </Card>
       ) : (
         <div className="space-y-4">
-          {news.map((item) => (
-            <Card key={item.id} className="material-shadow border-l-4 border-l-primary">
+          {news.map((item, index) => (
+            <Card 
+              key={item.id} 
+              className={`material-shadow border-l-4 border-l-primary card-hover stagger-animation`}
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <CardContent className="p-4">
                 <div className="flex items-start space-x-3">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getCategoryColor(item.category)}`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 smooth-transition ${getCategoryColor(item.category)}`}>
                     {getCategoryIcon(item.category)}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium text-on-surface mb-2">
+                    <h3 className="font-medium text-on-surface mb-2 smooth-transition">
                       {item.title}
                     </h3>
                     <p className="text-on-surface-variant text-sm mb-3">
@@ -126,7 +130,7 @@ export function NewsTab() {
                     </p>
                     <div className="flex items-center justify-between text-xs text-on-surface-variant">
                       <span>{formatDate(new Date(item.publishedAt))}</span>
-                      <Badge className={`${getCategoryColor(item.category)} text-white px-2 py-1 rounded-full`}>
+                      <Badge className={`${getCategoryColor(item.category)} text-white px-2 py-1 rounded-full smooth-transition`}>
                         {item.category}
                       </Badge>
                     </div>

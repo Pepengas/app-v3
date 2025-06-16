@@ -25,7 +25,7 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-surface material-shadow-lg border-t border-border">
+    <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-md bg-surface material-shadow-lg border-t border-border backdrop-blur-md bg-opacity-95">
       <div className="flex items-center justify-around py-2">
         {tabs.map(({ id, label, icon: Icon }) => (
           <Button
@@ -33,13 +33,15 @@ export function Navigation({ activeTab, onTabChange }: NavigationProps) {
             variant="ghost"
             size="sm"
             onClick={() => onTabChange(id)}
-            className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
+            className={`nav-button flex flex-col items-center py-2 px-3 rounded-lg smooth-transition ${
               activeTab === id
-                ? "text-primary bg-primary/10"
-                : "text-on-surface-variant hover:bg-accent"
+                ? "text-primary bg-primary/10 active"
+                : "text-on-surface-variant hover:bg-accent hover:text-primary"
             }`}
           >
-            <Icon className="h-5 w-5 mb-1" />
+            <Icon className={`h-5 w-5 mb-1 smooth-transition ${
+              activeTab === id ? "scale-110" : ""
+            }`} />
             <span className="text-xs font-medium">{label}</span>
           </Button>
         ))}

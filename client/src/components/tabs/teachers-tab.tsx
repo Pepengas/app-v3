@@ -122,15 +122,19 @@ export function TeachersTab() {
         </Card>
       ) : (
         <div className="space-y-3">
-          {teachers.map((teacher) => (
-            <Card key={teacher.id} className="material-shadow">
+          {teachers.map((teacher, index) => (
+            <Card 
+              key={teacher.id} 
+              className="material-shadow card-hover stagger-animation"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <CardContent className="p-4">
                 <div className="flex items-center space-x-4">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-white font-medium ${getInitialsColor(teacher.name)}`}>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-white font-medium smooth-transition bounce-in ${getInitialsColor(teacher.name)}`}>
                     {getInitials(teacher.name)}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium text-on-surface">{teacher.name}</h3>
+                    <h3 className="font-medium text-on-surface smooth-transition">{teacher.name}</h3>
                     <p className="text-on-surface-variant text-sm">{teacher.department}</p>
                     {teacher.specialization && (
                       <p className="text-on-surface-variant text-xs mt-1">{teacher.specialization}</p>
@@ -141,14 +145,14 @@ export function TeachersTab() {
                       variant="ghost"
                       size="icon"
                       onClick={() => handleEmailClick(teacher.email)}
-                      className="p-2 text-primary hover:bg-surface-variant"
+                      className="p-2 text-primary hover:bg-surface-variant smooth-transition hover:scale-110"
                     >
                       <Mail className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="p-2 text-primary hover:bg-surface-variant"
+                      className="p-2 text-primary hover:bg-surface-variant smooth-transition hover:scale-110"
                     >
                       <Info className="h-4 w-4" />
                     </Button>

@@ -78,22 +78,26 @@ export function LinksTab() {
         </Card>
       ) : (
         <div className="space-y-4">
-          {links.map((link) => (
-            <Card key={link.id} className="material-shadow">
+          {links.map((link, index) => (
+            <Card 
+              key={link.id} 
+              className="material-shadow card-hover stagger-animation"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <CardContent className="p-4">
                 <div className="flex items-center space-x-4">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${link.color}`}>
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center smooth-transition bounce-in ${link.color}`}>
                     {getIconByName(link.icon)}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium text-on-surface">{link.title}</h3>
+                    <h3 className="font-medium text-on-surface smooth-transition">{link.title}</h3>
                     <p className="text-on-surface-variant text-sm">{link.description}</p>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => handleLinkClick(link.url, link.isExternal)}
-                    className="p-2 text-primary hover:bg-surface-variant"
+                    className="p-2 text-primary hover:bg-surface-variant smooth-transition hover:scale-110"
                   >
                     <ExternalLink className="h-4 w-4" />
                   </Button>
