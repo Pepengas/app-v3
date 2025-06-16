@@ -1,0 +1,11 @@
+{
+  "appId": "com.example.universitycompanion",
+  "appName": "University Companion",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "hostname": "localhost",
+    "cleartext": true
+  }
+} 
