@@ -99,6 +99,7 @@ The application is configured for deployment on Replit with the following setup:
 ```
 Changelog:
 - June 16, 2025. Initial setup
+- June 16, 2025. Database integration completed - Migrated from in-memory storage to PostgreSQL with Drizzle ORM, implemented DatabaseStorage class, seeded with authentic Greek university data
 ```
 
 ## User Preferences
